@@ -3,7 +3,6 @@ import os
 print("Parsing build properties file [OK]")
 BUILD = configparser.ConfigParser()
 
-
 try:
     print("Reading build properties file [OK]")
     BUILD.read('build.properties')
@@ -17,7 +16,6 @@ try:
 except Exception as e:
     print(f"{e} [ERROR]")
 
-
 if test=="true":
     try:
         os.chdir("tests")
@@ -27,11 +25,14 @@ if test=="true":
         print(f"{e} [ERROR]")
 elif test=="false":
     print("Test option false")
-    
     try:
         os.chdir(PATH)
         print("Running main module [OK]")
-        os.system("python3 main.py")
+        try:
+            os.system("pyinstaller --onefile main.py") # pyinstaller (https://pyinstaller.org/en/stable/ or https://pypi.org/project/pyinstaller/)
+            
+        except:
+            os.system("pip install pyinstaller")
     except Exception as e:
         print(f"{e} [ERROR]")
 else:
